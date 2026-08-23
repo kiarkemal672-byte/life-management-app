@@ -80,3 +80,10 @@ body{background:linear-gradient(-45deg,#ee7752,#e73c7e,#23a6d5,#23d5ab);backgrou
 .dark-mode .navbar{background:rgba(0,0,0,0.3)}
 .task-item,.finance-card,.daily-progress-bar-container,.modal-content,.calendar-day,.settings-btn{background:rgba(255,255,255,0.9);backdrop-filter:blur(5px)}
 .dark-mode .task-item,.dark-mode .finance-card,.dark-mode .daily-progress-bar-container,.dark-mode .modal-content,.dark-mode .calendar-day,.dark-mode .settings-btn{background:rgba(44,44,44,0.85)}
+body{background:url('https://z-cdn-media.chatglm.cn/files/545eae47-2db3-48b9-860e-01dab2c4a541.jpg') no-repeat center center fixed;background-size:cover;animation:moveBg 20s linear infinite}
+.dark-mode body{background:url('https://z-cdn-media.chatglm.cn/files/545eae47-2db3-48b9-860e-01dab2c4a541.jpg') no-repeat center center fixed;background-size:cover;animation:moveBg 20s linear infinite}
+@keyframes moveBg{from{background-position:0 0}to{background-position:0 100%}}
+.navbar{background:rgba(255,255,255,0.2);backdrop-filter:blur(10px);box-shadow:0 4px 15px rgba(0,0,0,0.1)}
+.dark-mode .navbar{background:rgba(0,0,0,0.3)}
+.task-item,.finance-card,.daily-progress-bar-container,.modal-content,.calendar-day,.settings-btn{background:rgba(255,255,255,0.85);backdrop-filter:blur(5px)}
+.dark-mode .task-item,.dark-mode .finance-card,.dark-mode .daily-progress-bar-container,.dark-mode .modal-content,.dark-mode .calendar-day,.dark-mode .settings-btn{background:rgba(20,20,20,0.85)}
