@@ -1,1 +1,135 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تطبيق إدارة الحياة الشامل</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="loading-screen">
+<div class="loader"></div>
+<p id="loading-text">جارٍ تحميل بياناتك...</p>
+</div>
+<nav class="navbar">
+<div class="nav-left">
+<button id="toggle-sidebar" class="icon-btn"><i class="fas fa-bars"></i></button>
+<h1 class="app-title" data-translate="app_title">مخططي اليومي</h1>
+</div>
+<div class="nav-right">
+<div class="lang-switcher">
+<button class="lang-btn" data-lang="ar">عربي</button>
+<button class="lang-btn" data-lang="en">EN</button>
+<button class="lang-btn" data-lang="am">አማ</button>
+</div>
+<button id="theme-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+<button id="account-switcher" class="icon-btn"><i class="fas fa-user-circle"></i></button>
+</div>
+</nav>
+<div class="app-container">
+<aside class="sidebar" id="sidebar">
+<ul class="sidebar-menu">
+<li class="active" data-view="daily"><i class="fas fa-calendar-day"></i> <span data-translate="daily_view">اليومي</span></li>
+<li data-view="weekly"><i class="fas fa-calendar-week"></i> <span data-translate="weekly_view">الأسبوعي</span></li>
+<li data-view="monthly"><i class="fas fa-calendar-alt"></i> <span data-translate="monthly_view">الشهري (التقويم)</span></li>
+<li data-view="finance"><i class="fas fa-wallet"></i> <span data-translate="finance">المالية</span></li>
+<li data-view="analytics"><i class="fas fa-chart-line"></i> <span data-translate="analytics">التحليلات</span></li>
+<li data-view="archive"><i class="fas fa-archive"></i> <span data-translate="archive">الأرشيف التاريخي</span></li>
+<li data-view="settings"><i class="fas fa-cog"></i> <span data-translate="settings">الإعدادات</span></li>
+</ul>
+</aside>
+  <main class="main-content">
+<div class="daily-progress-bar-container">
+<div class="progress-info"><span data-translate="daily_progress">تقدم اليوم</span>: <span id="progress-percentage">0%</span></div>
+<div class="progress-bar"><div id="daily-progress" class="progress-fill"></div></div>
+</div>
+<button id="quick-interceptor-btn" class="fab-btn" title="مهمة اعتراضية"><i class="fas fa-bolt"></i></button>
+<section id="daily-view" class="view-section active">
+<div class="view-header"><h2 data-translate="today_plan">خطة اليوم</h2><button class="add-task-btn" data-type="daily"><i class="fas fa-plus"></i></button></div>
+<div id="daily-tasks-list" class="tasks-list"></div>
+</section>
+<section id="weekly-view" class="view-section">
+<div class="view-header"><h2 data-translate="week_plan">خطة الأسبوع</h2></div>
+<div id="weekly-tasks-list" class="tasks-list"></div>
+</section>
+<section id="monthly-view" class="view-section">
+<div class="view-header"><h2 data-translate="month_plan">تقويم الشهر</h2></div>
+<div id="calendar-container"></div>
+</section>
+<section id="finance-view" class="view-section">
+<div class="view-header"><h2 data-translate="finance_tracker">المتتبع المالي</h2><button class="add-finance-btn"><i class="fas fa-plus"></i></button></div>
+<div class="finance-summary">
+<div class="finance-card income"><span data-translate="income">وارد</span><span id="total-income">0</span></div>
+<div class="finance-card expense"><span data-translate="expense">مصروف</span><span id="total-expense">0</span></div>
+</div>
+<div id="finance-list" class="tasks-list"></div>
+</section>
+<section id="analytics-view" class="view-section">
+<div class="view-header"><h2 data-translate="analytics_dashboard">لوحة التحليلات</h2></div>
+<div id="charts-container"></div>
+</section>
+<section id="archive-view" class="view-section">
+<div class="view-header"><h2 data-translate="history_archive">الأرشيف التاريخي</h2></div>
+<div id="archive-list"></div>
+</section>
+<section id="settings-view" class="view-section">
+<div class="view-header"><h2 data-translate="settings_menu">الإعدادات</h2></div>
+<div class="settings-container">
+<button id="export-data" class="settings-btn"><i class="fas fa-file-export"></i> <span data-translate="export">تصدير البيانات</span></button>
+<button id="import-data" class="settings-btn"><i class="fas fa-file-import"></i> <span data-translate="import">استيراد البيانات</span></button>
+<button id="sync-cloud" class="settings-btn"><i class="fas fa-cloud"></i> <span data-translate="sync">مزامنة سحابية</span></button>
+</div>
+</section>
+  </main>
+  <div id="task-modal" class="modal">
+<div class="modal-content">
+<span class="close-btn">&times;</span>
+<h3 id="modal-title">إضافة مهمة جديدة</h3>
+<input type="text" id="task-title" placeholder="عنوان المهمة">
+<input type="time" id="task-time">
+<select id="task-alert-type">
+<option value="none">بدون تنبيه</option>
+<option value="visual">تنبيه بصري</option>
+<option value="audio">تنبيه صوتي</option>
+<option value="both">بصري وصوتي</option>
+</select>
+<button id="save-task">حفظ</button>
+</div>
+</div>
+<div id="finance-modal" class="modal">
+<div class="modal-content">
+<span class="close-btn">&times;</span>
+<h3>تسجيل مالي جديد</h3>
+<input type="text" id="finance-desc" placeholder="الوصف">
+<input type="number" id="finance-amount" placeholder="المبلغ">
+<select id="finance-type">
+<option value="income">وارد</option>
+<option value="expense">مصروف</option>
+</select>
+<button id="save-finance">حفظ</button>
+</div>
+</div>
+<div id="interceptor-modal" class="modal">
+<div class="modal-content">
+<span class="close-btn">&times;</span>
+<h3>مهمة اعتراضية سريعة</h3>
+<input type="text" id="interceptor-desc" placeholder="ماذا طرأ عليك؟">
+<button id="save-interceptor">حفظ سريع</button>
+</div>
+</div>
+<div id="notification-container"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+window.addEventListener('load', () => {
+navigator.serviceWorker.register('sw.js').then(reg => console.log('SW registered:', reg)).catch(err => console.log('SW registration failed:', err));
+});
+}
+</script>
+</body>
+</html>
